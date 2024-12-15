@@ -8,27 +8,39 @@
 //e por fim, crie outro vetor auxiliar que faça a restauração do texto original,
 //copiando a partir do vetor criptografado, e também faça a impressão no console do mesmo.
 
-//!Função para criptografar o vetor
+import Scanner from "@codeea/scanner";
+let scanner: Scanner;
 
-const criptografar = (vetor: string[]) => vetor.map (str =>
-  str.replace (/./g, char => String.fromCharCode (char.charCodeAt (0) + 3))
-)
+// Função para deslocar caracteres de uma palavra
+const deslocarCaracteres = (palavra: string, deslocamento: number): string => {
+  return palavra.split('').map(letra =>
+      String.fromCharCode(letra.charCodeAt(0) + deslocamento)
+  ).join('');
+};
+
+// Função para criptografar um vetor de strings
+const criptografar = (vetor: string[]): string[] => {
+  return vetor.map(palavra => deslocarCaracteres(palavra, 5));
+};
+
+// Função para descriptografar um vetor de strings
+const descriptografar = (vetor: string[]): string[] => {
+  return vetor.map(palavra => deslocarCaracteres(palavra, -5));
+};
 
 
-//!Função para descriptografar vetor, deslocar em -3
+const executar = async () => {
 
-const descriptografar = (vetor: string[]) => vetor.map (str =>
-  str.replace (/./g, char => String.fromCharCode (char.charCodeAt (0) - 3))
-)
+  const palavrasOriginais = ["Ola", "Mundo", "Criptografar", "Descriptografar"];
 
-const vetor1 = ["Ola", "Mundo", "Criptografar", "Descriptografar", "Bolsonaro",];
+  // Criptografar o vetor e imprimir o resultado
+  const palavrasCriptografadas = criptografar(palavrasOriginais);
+  console.log("Palavras Criptografadas:", palavrasCriptografadas);
 
-//!criptografar e imprimir
+  // Descriptografar o vetor e imprimir o resultado
+  const palavrasDescriptografadas = descriptografar(palavrasCriptografadas);
+  console.log("Palavras Descriptografadas:", palavrasDescriptografadas);
+};
 
-const vetorCriptografado = criptografar(vetor1);
-console.log ("Vetor Criptografado", vetorCriptografado);
-
-//!Descriptografar e imprimir
-
-const vetorDescriptografado = descriptografar(vetorCriptografado);
-console.log ("Vetor Descriptografado", vetorDescriptografado)
+// Chamar a função principal
+executar();
